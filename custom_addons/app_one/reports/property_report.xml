@@ -1,0 +1,181 @@
+<odoo>
+    <!-- ================= Report Action ================= -->
+    <record id="property_report" model="ir.actions.report">
+        <field name="name">Property Report</field>
+        <field name="model">property</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="model_property"/>
+        <field name="binding_type">report</field>
+        <field name="report_name">app_one.property_report_template</field>
+    </record>
+    <!-- ================= Report Template ================= -->
+    <template id="property_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page"
+                         t-att-dir="'rtl' if request.env.context.get('lang') == 'ar_001' else 'ltr'">                        <!-- ================= Title ================= -->
+                        <h2 class="text-center">
+                            <t>Property Report</t>
+                        </h2>
+                        <hr/>
+                        <!-- ================= Data Table ================= -->
+                        <table class="table table-sm table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Reference</th>
+                                    <td>
+                                        <span t-field="o.ref"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Name</th>
+                                    <td>
+                                        <span t-field="o.name"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Postcode</th>
+                                    <td>
+                                        <span t-field="o.postcode"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Date Availability</th>
+                                    <td>
+                                        <span t-field="o.date_availability"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Expected Selling Date</th>
+                                    <td>
+                                        <span t-field="o.expected_selling_date"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Is Late</th>
+                                    <td>
+                                        <t t-if="o.is_late">
+                                            <t>Yes</t>
+                                        </t>
+                                        <t t-else="">
+                                            <t>No</t>
+                                        </t>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Expected Price</th>
+                                    <td>
+                                        <span t-field="o.expected_price"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Selling Price</th>
+                                    <td>
+                                        <span t-field="o.selling_price"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Difference</th>
+                                    <td>
+                                        <span t-field="o.diff"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Bedrooms</th>
+                                    <td>
+                                        <span t-field="o.bedrooms"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Living Area</th>
+                                    <td>
+                                        <span t-field="o.living_area"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Facades</th>
+                                    <td>
+                                        <span t-field="o.facades"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Garden</th>
+                                    <td>
+                                        <t t-if="o.garden">
+                                            <t>Yes</t>
+                                        </t>
+                                        <t t-else="">
+                                            <t>No</t>
+                                        </t>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Garage</th>
+                                    <td>
+                                        <t t-if="o.garage">
+                                            <t>Yes</t>
+                                        </t>
+                                        <t t-else="">
+                                            <t>No</t>
+                                        </t>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Owner</th>
+                                    <td>
+                                        <span t-field="o.owner_id"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Owner Address</th>
+                                    <td>
+                                        <span t-field="o.owner_address"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Owner Phone</th>
+                                    <td>
+                                        <span t-field="o.owner_phone"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Garden Area</th>
+                                    <td>
+                                        <span t-field="o.garden_area"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Garden Orientation</th>
+                                    <td>
+                                        <span t-field="o.garden_orientation"/>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

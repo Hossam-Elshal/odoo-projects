@@ -1,0 +1,20 @@
+<odoo>
+<!--RootMenu-->
+    <menuitem
+        id = 'real_state_root_menu'
+        name = 'Real State'
+        web_icon="app_one,static\description\icon.png"
+    />
+
+<!--Menuitem-->
+    <menuitem
+        id = 'properties_menu'
+        name = 'Properties'
+        parent = 'real_state_root_menu'
+    />
+<!--Menuitem-->
+        <menuitem
+        id = 'configurations_menu'
+        name = 'Configurations'
+        parent = 'real_state_root_menu'/>
+</odoo>

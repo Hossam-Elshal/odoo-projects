@@ -1,0 +1,79 @@
+<odoo>
+    <data>
+        <!-- ================= Category ====================================-->
+        <record id="property_category" model="ir.module.category">
+            <field name="name">Real Estate</field>
+            <field name="description">Manage real estate properties and operations</field>
+        </record>
+        <!-- ================= Groups ======================================-->
+        <record id="property_user_group" model="res.groups">
+            <field name="name">User</field>
+            <field name="comment">Basic access to real estate properties</field>
+            <field name="category_id" ref="app_one.property_category"/>
+        </record>
+
+        <record id="property_supervisor_group" model="res.groups">
+            <field name="name">Supervisor</field>
+            <field name="comment">Supervise real estate operations and team members</field>
+            <field name="category_id" ref="app_one.property_category"/>
+            <field name="implied_ids" eval="[(4, ref('app_one.property_user_group'))]"/>
+        </record>
+
+        <record id="property_administrator_group" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="comment">Full administrative access to real estate module</field>
+            <field name="category_id" ref="app_one.property_category"/>
+            <field name="implied_ids" eval="[(4, ref('app_one.property_supervisor_group'))]"/>
+        </record>
+        <!-- ================   record rules ============================ -->
+        <!-- USER record rules ====== -->
+        <!-- Rule : USER can see own records -->
+        <record id="property_rule_user" model="ir.rule">
+            <field name="name">property.by.user</field>
+            <field name="model_id" ref="app_one.model_property"/>
+            <field name="groups" eval="[(4, ref('app_one.property_user_group'))]"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- supervisor record rules ====== -->
+        <!-- Rule 1 : Supervisor can see "User" records -->
+        <record id="property_rule_supervisor_user_records" model="ir.rule">
+            <field name="name">property.supervisor.user.records</field>
+            <field name="model_id" ref="app_one.model_property"/>
+            <field name="groups" eval="[(4, ref('app_one.property_supervisor_group'))]"/>
+            <field name="domain_force" eval="[('create_uid.groups_id','in',[ref('app_one.property_user_group')])]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- Rule 2 : Supervisor can see assigned records -->
+        <record id="property_rule_supervisor_assigned" model="ir.rule">
+            <field name="name">property.supervisor.assigned</field>
+            <field name="model_id" ref="app_one.model_property"/>
+            <field name="groups" eval="[(4, ref('app_one.property_supervisor_group'))]"/>
+            <field name="domain_force">[('category_id.category_manager_id','=',user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- administrator record rules ====== -->
+        <record id="property_rule_admin" model="ir.rule">
+            <field name="name">property.by.administrator</field>
+            <field name="model_id" ref="app_one.model_property"/>
+            <field name="groups" eval="[(4, ref('app_one.property_administrator_group'))]"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+</odoo>
