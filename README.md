@@ -25,10 +25,3 @@
 # Security: access rights, record rules, UI
 
 
-Odoo 17
-
-Python & PostgreSQL
-
-XML/QWeb (views)
-
-JavaScript (UI enhancements)
